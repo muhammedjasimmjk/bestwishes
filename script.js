@@ -695,12 +695,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Global waveform render loop
   function drawWaveforms() {
+    const voicesSection = document.getElementById('voices-section');
+    if (voicesSection && voicesSection.style.display === 'none') {
+      requestAnimationFrame(drawWaveforms);
+      return;
+    }
+
     canvasList.forEach(item => {
       const { card, canvas, ctx } = item;
+      
+      // Stop rendering/clearing if the card is not even active!
+      if (!card.classList.contains('active')) {
+        return;
+      }
+      
       const width = canvas.width;
       const height = canvas.height;
       
-      const isActive = card.classList.contains('active') && card.classList.contains('playing');
+      const isActive = card.classList.contains('playing');
       
       // Fluid amplitude adjustments (resting vs active frequencies)
       const targetAmp = isActive ? 12 : 2.5;
@@ -1123,7 +1135,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     update() {
-      this.particles.forEach((p, idx) => {
+      // Filter out offscreen particles
+      this.particles = this.particles.filter(p => p.y <= this.canvas.height + 20);
+      
+      // If no particles left and active, stop the animation loop to save resources!
+      if (this.particles.length === 0 && this.active) {
+        this.stop();
+        return;
+      }
+
+      this.particles.forEach(p => {
         p.vy += p.gravity;
         p.vx *= p.friction;
         p.vy *= p.friction;
@@ -1135,11 +1156,6 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // Float sway
         p.x += Math.sin(p.oscillation) * 0.5;
-
-        // Remove offscreen particles
-        if (p.y > this.canvas.height + 20) {
-          this.particles.splice(idx, 1);
-        }
       });
     }
 
@@ -1171,8 +1187,10 @@ document.addEventListener('DOMContentLoaded', () => {
     animate() {
       if (!this.active) return;
       this.update();
-      this.draw();
-      this.animationFrameId = requestAnimationFrame(() => this.animate());
+      if (this.active) {
+        this.draw();
+        this.animationFrameId = requestAnimationFrame(() => this.animate());
+      }
     }
 
     stop() {
@@ -1615,6 +1633,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     animate() {
+      if (this.paused) return;
       this.update();
       this.draw();
       this.animationFrameId = requestAnimationFrame(() => this.animate());
@@ -1623,10 +1642,19 @@ document.addEventListener('DOMContentLoaded', () => {
     // === TOGGLES FOR DYNAMIC CONTROLS & CHAPTERS ===
     pause() {
       this.paused = true;
+      if (this.animationFrameId) {
+        cancelAnimationFrame(this.animationFrameId);
+        this.animationFrameId = null;
+      }
     }
 
     resume() {
-      this.paused = false;
+      if (this.paused) {
+        this.paused = false;
+        if (!this.animationFrameId) {
+          this.animate();
+        }
+      }
     }
 
     disable() {

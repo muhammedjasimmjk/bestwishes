@@ -1162,6 +1162,8 @@ body.museum-theme .corner-floral {
               box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1);
   user-select: none;
   outline: none;
+  will-change: transform;
+  backface-visibility: hidden;
 }
 
 .memory-card:hover, .memory-card:focus-visible {
