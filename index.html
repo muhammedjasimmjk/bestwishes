@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="A cinematic, handcrafted interactive birthday tribute celebrating life, growth, and beautiful memories.">
+  <meta name="author" content="Antigravity">
+
+  <title>A Life of Beautiful Moments</title>
+
+  <!-- Google Fonts - Cormorant Garamond (Serif) & Inter (Sans-Serif) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300&family=Inter:wght@300;400;500;600&display=swap"
+    rel="stylesheet">
+
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- Ambient Glow Backdrop (Cursor Spot-tracking overlay) -->
+  <div class="ambient-glow" id="ambient-glow" aria-hidden="true"></div>
+
+  <!-- Ambient Particles Canvas -->
+  <canvas class="ambient-particles" id="particle-canvas" aria-hidden="true"></canvas>
+
+  <!-- Elegant Corner Floral Framing Borders -->
+  <div class="corner-floral top-left" aria-hidden="true"></div>
+  <div class="corner-floral bottom-right" aria-hidden="true"></div>
+
+  <main>
+
+    <!-- PHASE 1: CINEMATIC INTRO SCREEN -->
+    <section class="section" id="intro-section" aria-label="Welcome Screen">
+      <div class="intro-subtitle" id="intro-subtitle">
+        <span class="subtitle-prefix">Happy Birthday to My Dear</span>
+        <span id="typing-text"></span>
+      </div>
+      <h1 class="intro-title">This is For and <br>About You</h1>
+      <p class="intro-desc">
+        Step inside to walk through a gallery of cherished moments, warm thoughts, and a celebration of the milestones
+        that define you.
+      </p>
+      <div class="intro-actions">
+        <button class="glass-button" id="enter-btn" aria-label="Begin the birthday experience">
+          Begin the Journey
+        </button>
+      </div>
+    </section>
+
+    <!-- PHASE 2: VOICES OF LOVE -->
+    <section class="section" id="voices-section" style="display: none;" aria-label="Voices of Love">
+
+      <!-- Stage A: Intimate Message Intro -->
+      <div id="voices-intro" class="voices-intro-container">
+        <span class="voices-small-title">Before We Begin</span>
+        <h2 class="voices-main-title">Someone Wanted to Say Something...</h2>
+        <p class="voices-subtitle">Some wishes are better heard than read.</p>
+        <button class="glass-button voices-continue-btn" id="voices-continue-btn" aria-label="Listen to voice messages">
+          Continue
+        </button>
+      </div>
+
+      <!-- Stage B: Audio Cards Gallery -->
+      <div id="voices-gallery" class="voices-gallery-container hidden">
+        <div class="voices-header" id="voices-header">
+          <span class="voices-gallery-small-title">Voices of Love</span>
+          <h2 class="voices-gallery-main-title">Someone Wanted to Say Something...</h2>
+        </div>
+
+        <!-- Minimalist name list -->
+        <ul class="voice-names-list" id="voice-names-list">
+          <li class="voice-name-item" data-target-id="mom"><span class="circle-bullet">○</span> Mom</li>
+          <li class="voice-name-item" data-target-id="dad"><span class="circle-bullet">○</span> Dad</li>
+          <li class="voice-name-item" data-target-id="sister"><span class="circle-bullet">○</span> Sister</li>
+        </ul>
+
+        <!-- Simple Navigation Button to Chapter III -->
+        <button class="glass-button next-chapter-btn" id="to-moments-btn" aria-label="Continue the Journey to Memories">
+          Continue to Our Memories
+        </button>
+
+        <!-- Active Card Container -->
+        <div class="active-card-container hidden" id="active-card-container">
+
+          <!-- Card 1: Mom -->
+          <div class="voice-card" data-voice-id="mom">
+            <button class="card-close-btn" aria-label="Close card expansion">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 6L6 18M6 6l12 12" />
+              </svg>
+            </button>
+            <div class="voice-card-content">
+              <div class="voice-card-expanded-header">
+                <h3 class="voice-card-expanded-name">Mom</h3>
+                <span class="voice-card-expanded-label">Birthday Message</span>
+              </div>
+              <div class="expansion-layout-grid">
+                <div class="speaker-portrait-wrapper" tabindex="0">
+                  <img class="speaker-portrait-img" src="assests/images/placeholder_avatar.png" alt="Mom's Portrait">
+                </div>
+                <div class="memory-slideshow-container" tabindex="0">
+                  <img class="memory-slide active"
+                    src="assests/images/with mom/PXL_20251207_085920416.PORTRAIT.jpg.jpeg" alt="Mom and Birthday Boy">
+                </div>
+              </div>
+              <div class="voice-card-body">
+                <canvas class="waveform-canvas" width="280" height="40" aria-label="Audio wave visualizer"></canvas>
+              </div>
+              <div class="voice-card-footer">
+                <button class="play-btn" aria-label="Play/Pause message">
+                  <svg class="play-icon" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M8 5v14l11-7z" />
+                  </svg>
+                  <svg class="pause-icon" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
+                  </svg>
+                </button>
+                <div class="player-timeline">
+                  <div class="progress-bar-container">
+                    <div class="progress-bar-track"></div>
+                    <div class="progress-bar-fill"></div>
+                    <input type="range" class="timeline-slider" min="0" max="100" value="0" step="0.1"
+                      aria-label="Scrub audio message from Mom">
+                  </div>
+                  <div class="time-display">
+                    <span class="current-time">0:00</span>
+                    <span class="divider">/</span>
+                    <span class="duration-time">0:00</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <audio class="voice-audio" src="assests/voices/mom's%20voice.ogg" preload="metadata"></audio>
+          </div>
+
+          <!-- Card 2: Dad -->
+          <div class="voice-card" data-voice-id="dad">
+            <button class="card-close-btn" aria-label="Close card expansion">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 6L6 18M6 6l12 12" />
+              </svg>
+            </button>
+            <div class="voice-card-content">
+              <div class="voice-card-expanded-header">
+                <h3 class="voice-card-expanded-name">Dad</h3>
+                <span class="voice-card-expanded-label">Birthday Message</span>
+              </div>
+              <div class="expansion-layout-grid">
+                <div class="speaker-portrait-wrapper" tabindex="0">
+                  <img class="speaker-portrait-img" src="assests/images/placeholder_avatar.png" alt="Dad's Portrait">
+                </div>
+                <div class="memory-slideshow-container" tabindex="0">
+                  <img class="memory-slide active"
+                    src="assests/images/with dad/WhatsApp Image 2026-07-15 at 11.08.00.jpeg" alt="Dad and Birthday Boy">
+                </div>
+              </div>
+              <div class="voice-card-body">
+                <canvas class="waveform-canvas" width="280" height="40" aria-label="Audio wave visualizer"></canvas>
+              </div>
+              <div class="voice-card-footer">
+                <button class="play-btn" aria-label="Play/Pause message">
+                  <svg class="play-icon" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M8 5v14l11-7z" />
+                  </svg>
+                  <svg class="pause-icon" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
+                  </svg>
+                </button>
+                <div class="player-timeline">
+                  <div class="progress-bar-container">
+                    <div class="progress-bar-track"></div>
+                    <div class="progress-bar-fill"></div>
+                    <input type="range" class="timeline-slider" min="0" max="100" value="0" step="0.1"
+                      aria-label="Scrub audio message from Dad">
+                  </div>
+                  <div class="time-display">
+                    <span class="current-time">0:00</span>
+                    <span class="divider">/</span>
+                    <span class="duration-time">0:00</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <audio class="voice-audio" src="assests/voices/dad's%20voice.ogg" preload="metadata"></audio>
+          </div>
+
+          <!-- Card 3: Sister -->
+          <div class="voice-card" data-voice-id="sister">
+            <button class="card-close-btn" aria-label="Close card expansion">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 6L6 18M6 6l12 12" />
+              </svg>
+            </button>
+            <div class="voice-card-content">
+              <div class="voice-card-expanded-header">
+                <h3 class="voice-card-expanded-name">Sister</h3>
+                <span class="voice-card-expanded-label">Birthday Message</span>
+              </div>
+              <div class="expansion-layout-grid">
+                <div class="speaker-portrait-wrapper" tabindex="0">
+                  <img class="speaker-portrait-img" src="assests/images/placeholder_avatar.png" alt="Sister's Portrait">
+                </div>
+                <div class="memory-slideshow-container" tabindex="0">
+                  <img class="memory-slide active"
+                    src="assests/images/with sister/WhatsApp Image 2026-07-14 at 14.39.56.jpeg"
+                    alt="Sister and Birthday Boy">
+                </div>
+              </div>
+              <div class="voice-card-body">
+                <canvas class="waveform-canvas" width="280" height="40" aria-label="Audio wave visualizer"></canvas>
+              </div>
+              <div class="voice-card-footer">
+                <button class="play-btn" aria-label="Play/Pause message">
+                  <svg class="play-icon" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M8 5v14l11-7z" />
+                  </svg>
+                  <svg class="pause-icon" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
+                  </svg>
+                </button>
+                <div class="player-timeline">
+                  <div class="progress-bar-container">
+                    <div class="progress-bar-track"></div>
+                    <div class="progress-bar-fill"></div>
+                    <input type="range" class="timeline-slider" min="0" max="100" value="0" step="0.1"
+                      aria-label="Scrub audio message from Sister">
+                  </div>
+                  <div class="time-display">
+                    <span class="current-time">0:00</span>
+                    <span class="divider">/</span>
+                    <span class="duration-time">0:00</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <audio class="voice-audio" src="assests/voices/sister'r%20voice.ogg" preload="metadata"></audio>
+          </div>
+
+
+
+      </div>
+    </section>
+
+    <!-- PHASE 3: MOMENTS (CHAPTER III) -->
+    <section class="section" id="moments-section" style="display: none;" aria-label="Our Moments">
+      <div class="moments-header" id="moments-header">
+        <span class="moments-small-title">Our Moments</span>
+        <h2 class="moments-main-title">A Few Moments I'll Never Forget.</h2>
+        <p class="moments-subtitle">Some memories deserve more than a place in a gallery. <br>They deserve their own story.</p>
+      </div>
+
+      <!-- Artistic Handcrafted Memory Wall Collage -->
+      <div class="moments-wall" id="moments-wall">
+        <!-- Dynamically Populated via script.js -->
+      </div>
+
+      <!-- Navigation to Chapter IV (Cake Section) -->
+      <div class="moments-footer" id="moments-footer">
+        <button class="glass-button next-chapter-btn" id="to-cake-btn" aria-label="Continue the Journey to Birthday Cake">
+          Continue the Journey
+        </button>
+      </div>
+    </section>
+
+    <!-- PHASE 4: INTERACTIVE BIRTHDAY CAKE (CHAPTER IV) -->
+    <section class="section" id="cake-section" style="display: none;" aria-label="Birthday Cake Celebration">
+      <!-- Confetti Overlay Canvas -->
+      <canvas id="confetti-canvas" class="confetti-canvas" aria-hidden="true"></canvas>
+
+      <!-- Interactive Birthday Cake -->
+      <div class="cake-container" id="cake-container" tabindex="0" aria-label="Interactive Birthday Cake. Click to blow out candles.">
+        <div class="cake-glow-beam"></div>
+        <div class="cake-wrapper">
+          <!-- Candles on Cake -->
+          <div class="candles-row">
+            <div class="candle" data-candle-id="1">
+              <div class="flame active"></div>
+              <div class="wax"></div>
+            </div>
+            <div class="candle" data-candle-id="2">
+              <div class="flame active"></div>
+              <div class="wax"></div>
+            </div>
+            <div class="candle" data-candle-id="3">
+              <div class="flame active"></div>
+              <div class="wax"></div>
+            </div>
+          </div>
+          <!-- Cake Layers -->
+          <div class="cake-top-layer">
+            <div class="sprinkle s1"></div>
+            <div class="sprinkle s2"></div>
+            <div class="sprinkle s3"></div>
+            <div class="sprinkle s4"></div>
+          </div>
+          <div class="cake-bottom-layer">
+            <div class="sprinkle s5"></div>
+            <div class="sprinkle s6"></div>
+            <div class="sprinkle s7"></div>
+            <div class="sprinkle s8"></div>
+          </div>
+          <!-- Cake Plate/Stand -->
+          <div class="cake-plate"></div>
+        </div>
+      </div>
+
+      <!-- Make a Wish Header (Relocated to bottom of cake) -->
+      <div class="cake-header" id="cake-header" style="margin-top: var(--space-8); margin-bottom: var(--space-4);">
+        <span class="cake-small-title">Make a Wish</span>
+        <h2 class="cake-main-title">A Celebration of You</h2>
+        <p class="cake-subtitle">Touch the candles to blow them out and reveal a special message.</p>
+      </div>
+
+      <!-- Letter Note Card (revealed after candles are blown out) -->
+      <div class="letter-note-container hidden" id="letter-note-container">
+        <div class="letter-note-card">
+          <h3 class="letter-title">A Special Note</h3>
+          <p class="letter-body">
+            Sorry for the late wish... 🥺
+          </p>
+        </div>
+      </div>
+
+      <!-- Wish Submission Form -->
+      <div class="wish-form-container hidden" id="wish-form-container">
+        <form id="birthday-wish-form" class="wish-form">
+          <label for="user-wish-input" class="wish-label">Type your wish here...</label>
+          <div class="wish-input-wrapper">
+            <input type="text" id="user-wish-input" class="wish-input" placeholder="Type your birthday wish..." required>
+            <button type="submit" class="glass-button wish-submit-btn">Send Wish</button>
+          </div>
+        </form>
+        
+        <!-- Auto Reply Note -->
+        <div class="wish-reply-box hidden" id="wish-reply-box">
+          <p class="wish-reply-text">
+            “Insha Allah adtha pravashya ippo enthayaalum nadakkoolaaa... 😂”
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FUTURE PHASE PLACEHOLDERS -->
+    <!-- Phase 4 : Things We Love About You -->
+    <!-- Phase 5 : Interactive Birthday Cake -->
+    <!-- Phase 6 : Final Letter -->
+    <!-- Phase 7 : Celebration Finale -->
+
+  </main>
+
+  <!-- Photo Lightbox Overlay Modal (Phase 2 Custom Photo expansion) -->
+  <div id="photo-lightbox" class="photo-lightbox" aria-modal="true" role="dialog" aria-label="Photo Viewer">
+    <button class="lightbox-close" id="lightbox-close" aria-label="Close photo viewer">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M18 6L6 18M6 6l12 12" />
+      </svg>
+    </button>
+    <div class="lightbox-content">
+      <img id="lightbox-img" src="" alt="Enlarged profile photo">
+      <h4 id="lightbox-caption">Speaker Name</h4>
+    </div>
+  </div>
+
+  <!-- Memory Viewer Modal (Chapter III) -->
+  <div id="memory-viewer" class="memory-viewer" aria-modal="true" role="dialog" aria-label="Memory Detail Viewer">
+    <div class="memory-viewer-backdrop"></div>
+    <div class="memory-viewer-content">
+      <button class="memory-viewer-close" id="memory-viewer-close" aria-label="Close memory detail">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M18 6L6 18M6 6l12 12" />
+        </svg>
+      </button>
+      <div class="memory-viewer-layout">
+        <div class="memory-viewer-image-wrapper">
+          <img id="viewer-img" src="" alt="Enlarged Memory">
+        </div>
+        <div class="memory-viewer-details">
+          <h3 id="viewer-title" class="viewer-title">Memory Title</h3>
+          <p id="viewer-caption" class="viewer-caption">Handwritten caption</p>
+          
+          <!-- Future Chapter Support Hooks:
+               - Place for audio message player play/pause button here
+               - Place for slideshow dots / next-prev controls here
+               - Place for animated memory dates container here
+          -->
+          
+          <button class="glass-button viewer-return-btn" id="viewer-return-btn" aria-label="Return to memory wall">
+            Return to Wall
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Interaction & Particle Logic Scripts -->
+  <script src="script.js"></script>
+</body>
+
+</html>
