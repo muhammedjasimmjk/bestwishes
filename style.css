@@ -64,7 +64,7 @@ html {
 
 body {
   background-color: var(--color-bg);
-  background-image: url('assests/images/page_background.png');
+  background-image: url('assests/images/page_background.webp');
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
@@ -1012,7 +1012,7 @@ body.warm-theme .ambient-glow {
   max-width: 340px;
   height: 28vw;
   max-height: 340px;
-  background-image: url('assests/images/corner_flowers.png');
+  background-image: url('assests/images/corner_flowers.webp');
   background-size: contain;
   background-repeat: no-repeat;
   pointer-events: none;
@@ -1051,7 +1051,7 @@ body.warm-theme .ambient-glow {
 /* Dark museum gallery theme active body */
 body.museum-theme {
   background-color: #121212; /* Deep charcoal dark room base */
-  background-image: url('assests/images/museum_background.png');
+  background-image: url('assests/images/museum_background.webp');
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
